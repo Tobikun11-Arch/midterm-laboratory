@@ -1,9 +1,9 @@
-import pool from '../config/db.js';
+import db from '../config/db.js';
 
 export const getUsers = async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM students');
-    res.status(200).json({users: rows});
+    const users = await db.selectFrom('students').selectAll().execute();
+    res.json(users);
   } catch (error) {
     res.status(500).json({error: error.message});
   }
